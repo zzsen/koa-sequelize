@@ -1,4 +1,6 @@
 const checkLogin = require('../middleware/checkLogin')
+const User = require('../model').user
+
 // 检查用户是否不存在
 let checkNotExist = (ctx) =>
   new Promise((resolve, reject) => {
@@ -35,7 +37,6 @@ let login = (ctx) => new Promise((resolve, reject) => {
   })
 })
 
-const User = require('../model').user
 module.exports = {
   // 注册
   register: async (ctx, next) => {
