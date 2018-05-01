@@ -28,15 +28,16 @@ fs
     return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js')
   })
   .forEach(file => {
-    var model = sequelize['import'](path.join(__dirname, file))
-    db[model.name] = model
-  })
+    console.log(file.slice(0, file.lastIndexOf('.js')))
+    var temp = require(path.join(__dirname, file))
+    console.log(temp)
+    console.log(temp[file.substr(0, file.lastIndexOf('.js'))])
 
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db)
-  }
-})
+    db[file.slice(0, file.lastIndexOf('.js'))] = sequelize.import('project', temp[file.substr(0, file.lastIndexOf('.js'))])
+    console.log(db)
+    // var model = sequelize['import'](path.join(__dirname, file))
+    // db[model.name] = model
+  })
 
 db.sequelize = sequelize
 db.Sequelize = Sequelize

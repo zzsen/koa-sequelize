@@ -1,19 +1,22 @@
-
 {
-  "mysql":[{
-      "environment":"development",
-      "host":"localhost",
-      "dialect":"mysql",
-      "database":"koa_demo",
-      "username":"123",
-      "password":"123"
-  }],
-  "session":[{
-      "environment":"development",
-      "key":"user",
-      "secret":"express_demo",
-      "resave":false,
-      "maxAge":1000000000,
-      "saveUninitialized":false
-  }]
+  "mysql": [
+    {
+      "environment": "development",
+      "host": "localhost",
+      "dialect": "mysql",
+      "database": "koa_demo",
+      "username": "root",
+      "password": "sen"
+    }
+  ],
+  "session": [
+    {
+      "environment": "development",
+      "key": "user",
+      "secret": "express_demo",
+      "resave": false,
+      "maxAge": 1000000000,
+      "saveUninitialized": false
+    }
+  ]
 }
