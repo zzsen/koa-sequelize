@@ -1,5 +1,7 @@
 const checkLogin = require('../middleware/checkLogin')
 const User = require('../model').user
+const UserClass = require('../model').userClass
+var debug = require('debug')('koa2Demo:userService')
 
 // 检查用户是否不存在
 let checkNotExist = (ctx) =>
@@ -8,6 +10,8 @@ let checkNotExist = (ctx) =>
       where: { account: ctx.request.body.account }
     }).then(user => {
       if (user) {
+        var u = new UserClass(user)
+        debug(u)
         reject(new Error('该用户已存在'))
       } else {
         resolve()
@@ -29,9 +33,6 @@ let login = (ctx) => new Promise((resolve, reject) => {
     } else if (user.password !== pwd) {
       reject(new Error('密码错误！'))
     }
-    // delete user.password
-    // console.log(user.password)
-    // console.log(pwd)
     ctx.session.user = user
     resolve({ message: '登录成功！' })
   })

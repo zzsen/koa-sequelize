@@ -1,5 +1,6 @@
 
 'use strict'
+// user的sequelize模型
 let user = (sequelize, DataTypes) => {
   const User = sequelize.define('user', {
     id: {
@@ -24,7 +25,18 @@ let user = (sequelize, DataTypes) => {
   )
   return User
 }
+
+// user的实例对象
+let userClass = class User {
+  constructor (data) {
+    if (data) {
+      this.id = data.id
+      this.account = data.account
+      this.name = data.name
+    }
+  }
+}
 module.exports = {
   user: user,
-  usermodel: user
+  userClass: userClass
 }
