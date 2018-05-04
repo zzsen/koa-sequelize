@@ -13,7 +13,6 @@ router.get('/login', userservice.login)
 router.post('/login', userservice.login)
 
 router.get('/signin', (ctx, next) => {
-  console.log('4')
   ctx.body = 'has not login'
 })
 

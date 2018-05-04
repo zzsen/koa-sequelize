@@ -5,6 +5,9 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
+const path = require('path')
+
+const debug = require('debug')('koa2Demo:app')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
@@ -49,7 +52,6 @@ app.use(async (ctx, next) => {
     await next()
   } catch (e) {
     ctx.response.status = e.statusCode || e.status || 500
-    console.log(ctx.response.status)
     ctx.body = e.message
   }
 })
@@ -62,9 +64,9 @@ app.use(bodyparser({
 }))
 app.use(json())
 app.use(logger())
-app.use(require('koa-static')(__dirname + '/public'))
+app.use(require('koa-static')(path.join(__dirname, 'public')))
 
-app.use(views(__dirname + '/views', {
+app.use(views(path.join(__dirname, 'views'), {
   extension: 'pug'
 }))
 
@@ -73,7 +75,7 @@ app.use(async (ctx, next) => {
   const start = new Date()
   await next()
   const ms = new Date() - start
-  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+  debug(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
 // routes
@@ -82,7 +84,7 @@ app.use(users.routes(), users.allowedMethods())
 // error-handling
 app.on('error', (err, ctx) => {
   ctx.body = err.message
-  console.log('server error', err, ctx)
+  debug('server error', err, ctx)
 })
 
 module.exports = app
